@@ -1,5 +1,6 @@
 package com.dlgsoft.mcinema.api.models
 
+import com.dlgsoft.mcinema.data.db.models.MovieItem
 import com.google.gson.annotations.SerializedName
 
 data class MovieItemApiObj(
@@ -16,14 +17,12 @@ data class MovieItemApiObj(
     @SerializedName("release_date")
     val releaseDate: String
 ) {
-    /*fun toLocalDbObj() = MovieListItem(
+    fun toLocalDbObj() = MovieItem(
         id = id,
         adult = adult,
         posterUrl = posterUrl,
-        description = description,
         title = title,
         voteAvg = voteAvg,
-        popularity = popularity,
-        timestamp = System.nanoTime()
-    )*/
+        releaseDate = releaseDate,
+    )
 }

@@ -5,6 +5,6 @@ import com.google.gson.annotations.SerializedName
 data class MoviesApiObj(
     @SerializedName("page")
     val page: Int,
-    @SerializedName("result")
-    val result: List<MovieItemApiObj>,
+    @SerializedName("results")
+    val movies: List<MovieItemApiObj>,
 )
