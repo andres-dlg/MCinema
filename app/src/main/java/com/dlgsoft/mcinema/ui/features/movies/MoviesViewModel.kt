@@ -17,6 +17,7 @@ import javax.inject.Inject
 class MoviesViewModel @Inject constructor(moviesRepository: MoviesRepository) : ViewModel() {
 
     private var page: Int = 1
+
     private val eventChannel = Channel<Event>()
     val events = eventChannel.receiveAsFlow()
 

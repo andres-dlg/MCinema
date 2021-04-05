@@ -19,6 +19,9 @@ import com.dlgsoft.mcinema.utils.Resource
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.onEach
 
 @AndroidEntryPoint
 class MoviesActivity : AppCompatActivity() {
@@ -43,6 +46,19 @@ class MoviesActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setupList(list)
+
+        /*viewModel.movies
+            .onEach {
+                val result = it ?: return@onEach
+                scrollListener.apply {
+                    listSize = result.data?.size ?: 0
+                    isLoading = false
+                }
+                moviesController.setData(result.data)
+                progress.isVisible = result is Resource.Loading
+            }
+            .launchIn(lifecycleScope)*/
+
 
         lifecycleScope.launchWhenStarted {
             viewModel.movies.collect {
