@@ -2,6 +2,7 @@ package com.dlgsoft.mcinema.api
 
 import com.dlgsoft.mcinema.BuildConfig
 import com.dlgsoft.mcinema.api.models.MovieApiObj
+import com.dlgsoft.mcinema.api.models.MovieReviewsApiObj
 import com.dlgsoft.mcinema.api.models.MoviesApiObj
 import retrofit2.Response
 import retrofit2.http.GET
@@ -23,6 +24,13 @@ interface MCinemaApi {
     @GET("movie/{id}")
     suspend fun getMovie(
         @Path("id") id: Long
-    ): Response<MovieApiObj>
+    ): MovieApiObj
+
+    @Headers("Authorization: ${BuildConfig.API_KEY}")
+    @GET("movie/{id}/reviews")
+    suspend fun getMovieReviews(
+        @Path("id") id: Long,
+        @Query("page") page: Int?,
+    ): MovieReviewsApiObj
 
 }

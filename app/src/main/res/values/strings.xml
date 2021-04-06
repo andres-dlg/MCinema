@@ -4,4 +4,6 @@
     <string name="unknown_error_occurred">Unknown error</string>
     <string name="retry">Retry</string>
     <string name="plus_18">+18</string>
+    <string name="show_reviews">SHOW REVIEWS</string>
+    <string name="votes">votes</string>
 </resources>

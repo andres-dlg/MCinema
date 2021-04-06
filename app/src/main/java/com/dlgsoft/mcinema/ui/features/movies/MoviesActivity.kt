@@ -69,24 +69,6 @@ class MoviesActivity : AppCompatActivity() {
                 }
                 moviesController.setData(result.data)
                 progress.isVisible = result is Resource.Loading
-
-                /*swipeRefreshLayout.isRefreshing = result is Resource.Loading
-                recyclerView.isVisible = !result.data.isNullOrEmpty()
-                textViewError.isVisible = result.error != null && result.data.isNullOrEmpty()
-                buttonRetry.isVisible = result.error != null && result.data.isNullOrEmpty()
-                textViewError.text = getString(
-                    R.string.could_not_refresh,
-                    result.error?.localizedMessage
-                        ?: getString(R.string.unknown_error_occurred)
-                )*/
-
-                /*newsArticleAdapter.submitList(result.data) {
-                    if (viewModel.pendingScrollToTopAfterRefresh) {
-                        recyclerView.scrollToPosition(0)
-                        viewModel.pendingScrollToTopAfterRefresh = false
-                    }
-                }*/
-
             }
         }
 

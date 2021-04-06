@@ -4,16 +4,20 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.dlgsoft.mcinema.data.db.dao.MovieItemDao
-import com.dlgsoft.mcinema.data.db.models.MovieItem
+import com.dlgsoft.mcinema.data.db.dao.*
+import com.dlgsoft.mcinema.data.db.models.*
 
 @Database(
-    entities = [MovieItem::class],
+    entities = [MovieItem::class, Movie::class, Genre::class, MovieReviews::class, Review::class],
     version = 1,
 )
 abstract class MCinemaDatabase : RoomDatabase() {
 
     abstract fun movieItemDao(): MovieItemDao
+    abstract fun movieDao(): MovieDao
+    abstract fun genreDao(): GenreDao
+    abstract fun movieReviewsDao(): MovieReviewsDao
+    abstract fun reviewDao(): ReviewDao
 
     companion object {
         @Volatile

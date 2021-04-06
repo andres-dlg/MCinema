@@ -20,7 +20,6 @@ inline fun <ResultType, RequestType> networkBoundResource(
         val loading = launch {
             query().collect { send(Resource.Loading(it)) }
         }
-
         try {
             saveFetchResult(fetch())
             onFetchSuccess()
