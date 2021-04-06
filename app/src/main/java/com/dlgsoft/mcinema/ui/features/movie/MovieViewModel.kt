@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dlgsoft.mcinema.data.repositories.MovieRepository
 import com.dlgsoft.mcinema.data.repositories.MovieReviewsRepository
+import com.dlgsoft.mcinema.ui.features.movies.MoviesViewModel
 import com.dlgsoft.mcinema.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
@@ -27,7 +28,7 @@ class MovieViewModel @Inject constructor(
     private val movieTrigger = movieTriggerChannel.receiveAsFlow()
 
     private val reviewsTriggerChannel = Channel<Long>()
-    private val reviewsTrigger = movieTriggerChannel.receiveAsFlow()
+    private val reviewsTrigger = reviewsTriggerChannel.receiveAsFlow()
 
     val movie = movieTrigger.flatMapLatest { id ->
         movieRepository.getMovie(id, {}, {})
@@ -51,5 +52,10 @@ class MovieViewModel @Inject constructor(
                 reviewsTriggerChannel.send(id)
             }
         }
+    }
+
+    fun loadNextPage(id: Long) {
+        page += 1
+        getReviews(id)
     }
 }

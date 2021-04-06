@@ -1,22 +1,20 @@
 package com.dlgsoft.mcinema.ui.features.movie
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.ImageView
 import android.widget.ProgressBar
-import android.widget.TextView
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
+import androidx.core.view.size
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.airbnb.epoxy.EpoxyRecyclerView
 import com.dlgsoft.mcinema.R
-import com.dlgsoft.mcinema.data.db.models.Movie
-import com.dlgsoft.mcinema.data.db.relations.MovieWithGenres
 import com.dlgsoft.mcinema.databinding.ActivityMovieBinding
-import com.dlgsoft.mcinema.ui.views.AvgTextView
-import com.dlgsoft.mcinema.ui.views.StarsView
+import com.dlgsoft.mcinema.utils.EndlessRecyclerOnScrollListener
 import com.dlgsoft.mcinema.utils.ImageLoader
 import com.dlgsoft.mcinema.utils.Resource
 import com.google.android.material.snackbar.Snackbar
@@ -32,29 +30,27 @@ class MovieActivity : AppCompatActivity() {
 
     private val movieViewModel: MovieViewModel by viewModels()
 
-    lateinit var root: ConstraintLayout
-    lateinit var toolbar: Toolbar
-    lateinit var title: TextView
-    lateinit var votes: TextView
-    lateinit var genres: TextView
-    lateinit var votesAvg: AvgTextView
-    lateinit var backdrop: ImageView
-    lateinit var poster: ImageView
-    lateinit var progress: ProgressBar
-    lateinit var stars: StarsView
+    private val movieController by lazy {
+        MovieController {
+            movieViewModel.getReviews(it)
+        }
+    }
+
+    private lateinit var root: ConstraintLayout
+    private lateinit var toolbar: Toolbar
+    private lateinit var list: EpoxyRecyclerView
+    private lateinit var progress: ProgressBar
+
+    private lateinit var scrollListener: EndlessRecyclerOnScrollListener
+
+    private val movieId by lazy { intent.extras?.getLong(EXTRA_MOVIE_ID, 0) ?: 0 }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityMovieBinding.inflate(layoutInflater)
-        title = binding.title
-        votes = binding.votes
-        votesAvg = binding.avgScore
-        genres = binding.genres
-        stars = binding.stars
-        backdrop = binding.backdrop
-        poster = binding.poster
         toolbar = binding.toolbar
         progress = binding.progress
+        list = binding.list
         root = binding.root
         setContentView(root)
 
@@ -64,16 +60,29 @@ class MovieActivity : AppCompatActivity() {
             setDisplayHomeAsUpEnabled(true)
         }
 
-        val id = intent.extras?.getLong(EXTRA_MOVIE_ID, 0) ?: 0
-        if (id > 0) {
-            setupObserver(id)
-            movieViewModel.getMovie(id)
+        if (movieId > 0) {
+            setupObserver()
+            setupList()
+            movieViewModel.getMovie(movieId)
         } else {
             finish()
         }
     }
 
-    private fun setupObserver(id: Long) {
+    private fun setupList() {
+        scrollListener = EndlessRecyclerOnScrollListener(
+            layoutManager = list.layoutManager as LinearLayoutManager,
+            listSize = list.size,
+            itemsUntilInvokeCallback = 2,
+            callback = {
+                movieViewModel.loadNextPage(movieId)
+            }
+        )
+        list.addOnScrollListener(scrollListener)
+        list.setController(movieController)
+    }
+
+    private fun setupObserver() {
         lifecycleScope.launchWhenStarted {
             movieViewModel.movie.collect { event ->
                 when (event) {
@@ -88,32 +97,46 @@ class MovieActivity : AppCompatActivity() {
                             ),
                             Snackbar.LENGTH_LONG
                         ).setAction(R.string.retry) {
-                            movieViewModel.getMovie(id)
+                            movieViewModel.getMovie(movieId)
                         }.show()
                     }
                     is Resource.Loading -> progress.isVisible = true
                     is Resource.Success -> {
                         progress.isVisible = false
-                        setupViews(event.data)
+                        movieController.movie = event.data
                     }
                 }
             }
         }
-    }
 
-    private fun setupViews(data: MovieWithGenres?) {
-        data?.let { m ->
-            title.text = m.movie.title
-            imageLoader.loadImage(poster, m.movie.posterUrl, "w342")
-            imageLoader.loadImage(backdrop, m.movie.backdropUrl, "w300")
-            votes.text = m.movie.votes.toString()
-            votesAvg.apply {
-                setScore(m.movie.voteAvg.toString())
-                setTextColor(R.color.ruby)
-                setAvgBackground(null)
-                stars.setScore(m.movie.voteAvg)
+        lifecycleScope.launchWhenStarted {
+            movieViewModel.reviews.collect { event ->
+                when (event) {
+                    is Resource.Error -> {
+                        progress.isVisible = true
+                        Snackbar.make(
+                            root,
+                            getString(
+                                R.string.could_not_refresh,
+                                event.error?.localizedMessage
+                                    ?: getString(R.string.unknown_error_occurred)
+                            ),
+                            Snackbar.LENGTH_LONG
+                        ).setAction(R.string.retry) {
+                            movieViewModel.getReviews(movieId)
+                        }.show()
+                    }
+                    is Resource.Loading -> progress.isVisible = true
+                    is Resource.Success -> {
+                        scrollListener.apply {
+                            listSize = event.data?.reviews?.size ?: 0
+                            isLoading = false
+                        }
+                        progress.isVisible = false
+                        movieController.rwt = event.data
+                    }
+                }
             }
-            genres.text = m.genres?.joinToString(", ") { it.genre }
         }
     }
 

@@ -8,6 +8,7 @@ import androidx.core.view.isVisible
 import androidx.core.view.size
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.airbnb.epoxy.EpoxyRecyclerView
 import com.dlgsoft.mcinema.R
 import com.dlgsoft.mcinema.databinding.ActivityMoviesBinding
@@ -19,9 +20,6 @@ import com.dlgsoft.mcinema.utils.Resource
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onCompletion
-import kotlinx.coroutines.flow.onEach
 
 @AndroidEntryPoint
 class MoviesActivity : AppCompatActivity() {
@@ -61,14 +59,31 @@ class MoviesActivity : AppCompatActivity() {
 
 
         lifecycleScope.launchWhenStarted {
-            viewModel.movies.collect {
-                val result = it ?: return@collect
-                scrollListener.apply {
-                    listSize = result.data?.size ?: 0
-                    isLoading = false
-                }
-                moviesController.setData(result.data)
+            viewModel.movies.collect { event ->
+                val result = event ?: return@collect
                 progress.isVisible = result is Resource.Loading
+                when (event) {
+                    is Resource.Error -> Snackbar.make(
+                        binding.root,
+                        getString(
+                            R.string.could_not_refresh,
+                            event.error?.localizedMessage
+                                ?: getString(R.string.unknown_error_occurred)
+                        ),
+                        Snackbar.LENGTH_LONG
+                    ).setAction(R.string.retry) {
+                        viewModel.onManualRefresh()
+                    }.show()
+                    is Resource.Loading -> {
+                    }
+                    is Resource.Success -> {
+                        scrollListener.apply {
+                            listSize = result.data?.size ?: 0
+                            isLoading = false
+                        }
+                        moviesController.setData(result.data)
+                    }
+                }
             }
         }
 
@@ -92,6 +107,11 @@ class MoviesActivity : AppCompatActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        scrollListener.listSize = 0
+    }
+
     private fun setupList(list: EpoxyRecyclerView) {
         val spanCount = 2
         val gridLayoutManager = GridLayoutManager(this, spanCount)
@@ -99,8 +119,9 @@ class MoviesActivity : AppCompatActivity() {
         list.layoutManager = gridLayoutManager
         list.adapter = moviesController.adapter
         scrollListener = EndlessRecyclerOnScrollListener(
-            layoutManager = list.layoutManager as GridLayoutManager,
+            layoutManager = list.layoutManager as LinearLayoutManager,
             listSize = list.size,
+            itemsUntilInvokeCallback = 11,
             callback = {
                 viewModel.loadNextPage()
             }

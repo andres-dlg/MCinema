@@ -11,15 +11,32 @@ import javax.inject.Inject
 class ImageLoader @Inject constructor(
     private val context: Context,
 ) {
-
-    fun loadImage(imageView: ImageView, imageUrl: String?, size: String) {
+    fun loadImage(
+        imageView: ImageView,
+        imageUrl: String?,
+        size: String,
+        isCircular: Boolean = false
+    ) {
         if (imageUrl != null) {
-            val glideUrl = GlideUrl("$BASE_URL_IMAGE/$size$imageUrl")
-            Glide.with(context)
-                .load(glideUrl)
-                .placeholder(R.drawable.placeholder)
-                .error(R.drawable.placeholder)
-                .into(imageView)
+            val glideUrl = if (imageUrl.startsWith("http")) {
+                GlideUrl(imageUrl)
+            } else {
+                GlideUrl("$BASE_URL_IMAGE/$size$imageUrl")
+            }
+            if (isCircular) {
+                Glide.with(context)
+                    .load(glideUrl)
+                    .placeholder(R.drawable.placeholder)
+                    .error(R.drawable.placeholder)
+                    .circleCrop()
+                    .into(imageView)
+            } else {
+                Glide.with(context)
+                    .load(glideUrl)
+                    .placeholder(R.drawable.placeholder)
+                    .error(R.drawable.placeholder)
+                    .into(imageView)
+            }
         } else {
             Glide.with(context)
                 .load(R.drawable.placeholder)

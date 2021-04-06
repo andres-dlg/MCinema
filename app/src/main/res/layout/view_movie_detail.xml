@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/backdrop"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/placeholder"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/poster"
+        android:layout_width="150dp"
+        android:layout_height="220dp"
+        android:layout_marginStart="16dp"
+        android:background="@drawable/placeholder"
+        android:elevation="16dp"
+        android:outlineProvider="paddedBounds"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="@+id/backdrop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/backdrop" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:src="@drawable/black_gradient"
+        app:layout_constraintBottom_toBottomOf="@+id/backdrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/title" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="16dp"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/backdrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/poster"
+        tools:text="Justice League" />
+
+    <TextView
+        android:id="@+id/votes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/genres"
+        app:layout_constraintStart_toEndOf="@+id/poster"
+        app:layout_constraintTop_toBottomOf="@+id/backdrop"
+        tools:text="3500" />
+
+    <TextView
+        android:id="@+id/votes_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="@string/votes"
+        app:layout_constraintBottom_toBottomOf="@+id/votes"
+        app:layout_constraintStart_toEndOf="@+id/votes"
+        app:layout_constraintTop_toTopOf="@+id/votes" />
+
+    <TextView
+        android:id="@+id/genres"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:textStyle="italic"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintBottom_toTopOf="@+id/avg_score"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="@+id/votes"
+        app:layout_constraintTop_toBottomOf="@+id/votes"
+        tools:text="Drama, Science Fiction, Fantasy" />
+
+    <com.dlgsoft.mcinema.ui.views.AvgTextView
+        android:id="@+id/avg_score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/poster"
+        app:layout_constraintStart_toStartOf="@+id/genres"
+        app:layout_constraintTop_toBottomOf="@+id/genres" />
+
+    <com.dlgsoft.mcinema.ui.views.StarsView
+        android:id="@+id/stars"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/avg_score"
+        app:layout_constraintStart_toEndOf="@+id/avg_score"
+        app:layout_constraintTop_toTopOf="@+id/avg_score" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

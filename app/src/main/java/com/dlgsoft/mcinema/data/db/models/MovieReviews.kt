@@ -8,5 +8,6 @@ data class MovieReviews(
     @PrimaryKey(autoGenerate = true)
     val id: Long?,
     val totalReviews: Int,
-    val movieId: Long
+    val movieId: Long,
+    val updatedAt: Long = System.nanoTime()
 )

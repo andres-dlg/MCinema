@@ -12,4 +12,5 @@ data class Review(
     val avatarUrl: String,
     val rating: Double,
     val content: String,
+    val updatedAt: Long = System.nanoTime()
 )

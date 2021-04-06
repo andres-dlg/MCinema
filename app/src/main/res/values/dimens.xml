@@ -17,4 +17,12 @@
     <dimen name="movie_list_item_adult_width">48dp</dimen>
     <dimen name="movie_list_item_adult_height">24dp</dimen>
     <dimen name="movie_list_item_adult_padding_end">8dp</dimen>
+    <dimen name="space_48dp">48dp</dimen>
+    <dimen name="spacer_16dp">16dp</dimen>
+    <dimen name="spacer_8dp">8dp</dimen>
+    <dimen name="movie_review_pading">16dp</dimen>
+    <dimen name="movie_review_author_height">36dp</dimen>
+    <dimen name="movie_review_author_text_size">18sp</dimen>
+    <dimen name="movie_description_top_margin">8dp</dimen>
+    <dimen name="movie_description_text_size">14sp</dimen>
 </resources>

@@ -8,5 +8,6 @@ data class Genre(
     @PrimaryKey
     val id: Long,
     val genre: String,
-    val movieId: Long
+    val movieId: Long,
+    val updatedAt: Long = System.nanoTime()
 )

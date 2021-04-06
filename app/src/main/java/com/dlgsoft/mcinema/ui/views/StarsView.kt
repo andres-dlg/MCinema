@@ -37,6 +37,8 @@ class StarsView : FrameLayout {
     }
 
     fun setScore(score: Double) {
+        root.removeAllViews()
+
         val filledStars = floor(score / 2).toInt()
         val outlineStars = 5 - filledStars
 

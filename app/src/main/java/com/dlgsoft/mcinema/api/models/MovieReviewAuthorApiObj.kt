@@ -8,13 +8,17 @@ data class MovieReviewAuthorApiObj(
     @SerializedName("username")
     val username: String,
     @SerializedName("avatar_path")
-    val avatarUrl: String,
+    val avatarUrl: String?,
     @SerializedName("rating")
     val rating: Double,
 ) {
-    fun getAvatarPath(): String = if (avatarUrl.startsWith("/http")) {
-        avatarUrl.removePrefix("/")
+    fun getAvatarPath() = if (avatarUrl != null) {
+        if (avatarUrl.startsWith("/http")) {
+            avatarUrl.removePrefix("/")
+        } else {
+            avatarUrl
+        }
     } else {
-        avatarUrl
+        ""
     }
 }

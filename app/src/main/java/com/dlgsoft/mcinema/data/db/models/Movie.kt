@@ -13,5 +13,6 @@ data class Movie(
     val backdropUrl: String?,
     val voteAvg: Double,
     val votes: Int,
-    val overview: String?
+    val overview: String?,
+    val updatedAt: Long = System.nanoTime()
 )
