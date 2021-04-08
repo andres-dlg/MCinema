@@ -12,6 +12,7 @@ data class MovieGenreApiObj(
     fun toLocalDbObj(movieId: Long) = Genre(
         id = id,
         genre = name,
-        movieId = movieId
+        movieId = movieId,
+        updatedAt = System.currentTimeMillis()
     )
 }

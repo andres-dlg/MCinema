@@ -8,9 +8,9 @@
     android:layout_height="wrap_content"
     android:clipChildren="false"
     android:clipToPadding="false"
-    android:padding="8dp"
-    app:cardCornerRadius="16dp"
-    app:cardElevation="8dp">
+    android:padding="@dimen/view_movie_item_padding"
+    app:cardCornerRadius="@dimen/view_movie_item_card_radius"
+    app:cardElevation="@dimen/view_movie_item_card_elevation">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/fixed_layout"
@@ -25,8 +25,9 @@
         <ImageView
             android:id="@+id/poster"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/movie_item_image_height"
+            android:layout_height="@dimen/view_movie_item_image_height"
             android:scaleType="centerCrop"
+            android:transitionName="poster"
             android:src="@drawable/placeholder"
             app:layout_constraintEnd_toEndOf="@+id/fixed_layout"
             app:layout_constraintStart_toStartOf="@+id/fixed_layout"
@@ -35,7 +36,7 @@
         <ImageView
             android:id="@+id/background"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/movie_item_black_gradient_height"
+            android:layout_height="@dimen/view_movie_item_black_gradient_height"
             android:src="@drawable/black_gradient"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/fixed_layout"
@@ -45,10 +46,10 @@
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/movie_list_item_title_horizontal_margin"
-            android:layout_marginBottom="16dp"
+            android:layout_marginHorizontal="@dimen/view_movie_list_item_title_horizontal_margin"
+            android:layout_marginBottom="@dimen/view_movie_item_title_bottom_margin"
             android:textColor="@color/white"
-            android:textSize="@dimen/movie_list_item_title_text_size"
+            android:textSize="@dimen/view_movie_list_item_title_text_size"
             android:textStyle="bold"
             app:layout_constrainedWidth="true"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -65,7 +66,7 @@
             android:id="@+id/year"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/movie_list_item_title_horizontal_margin"
+            android:layout_marginHorizontal="@dimen/view_movie_list_item_title_horizontal_margin"
             android:textColor="@color/white"
             android:textStyle="italic"
             app:layout_constraintBottom_toTopOf="@+id/title"
@@ -73,11 +74,11 @@
 
         <TextView
             android:id="@+id/adult"
-            android:layout_width="@dimen/movie_list_item_adult_width"
-            android:layout_height="@dimen/movie_list_item_adult_height"
+            android:layout_width="@dimen/view_movie_list_item_adult_width"
+            android:layout_height="@dimen/view_movie_list_item_adult_height"
             android:background="@drawable/black_gradient_rotated"
             android:gravity="center|start"
-            android:paddingStart="@dimen/movie_list_item_adult_padding_end"
+            android:paddingStart="@dimen/view_movie_list_item_adult_padding_end"
             android:text="@string/plus_18"
             android:textColor="@color/white"
             app:layout_constraintStart_toStartOf="parent"
@@ -86,11 +87,11 @@
 
         <com.dlgsoft.mcinema.ui.views.AvgTextView
             android:id="@+id/vote_avg"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_margin="8dp"
+            android:layout_width="@dimen/view_movie_item_vote_avg_width"
+            android:layout_height="@dimen/view_movie_item_vote_avg_height"
+            android:layout_margin="@dimen/view_movie_item_vote_avg_margin"
             android:background="@drawable/vote_avg_background"
-            android:elevation="8dp"
+            android:elevation="@dimen/view_movie_item_vote_avg_elevation"
             android:gravity="center"
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"

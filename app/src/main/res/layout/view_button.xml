@@ -5,6 +5,6 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
     android:background="@drawable/button_background"
-    android:paddingHorizontal="16dp"
+    android:paddingHorizontal="@dimen/view_button_horizontal_padding"
     android:text="@string/show_reviews"
     android:textColor="@color/white" />

@@ -7,4 +7,14 @@
     <string name="show_reviews">SHOW REVIEWS</string>
     <string name="votes">votes</string>
     <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
+    <string name="no_movies_for_now">There are no movies to show :(</string>
+    <string name="filters">Set Expiration Date</string>
+    <string name="apply">Apply</string>
+    <string name="close">Close</string>
+    <string name="expiration_date">Local DB expiration date</string>
+    <string name="days">Days</string>
+    <string name="hours">Hours</string>
+    <string name="minutes">Minutes</string>
+    <string name="expiration_time_hint">If the value is zero on days, hours and minutes, the expiration time will be set automatically on 24hs</string>
+    <string name="could_not_retrieve_movie">Could not retrieve movie data</string>
 </resources>

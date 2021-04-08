@@ -9,8 +9,8 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface MovieItemDao {
-    @Query("SELECT * FROM movie_item ORDER BY updatedAt ASC")
-    fun getMovieListItems(): Flow<List<MovieItem>>
+    @Query("SELECT * FROM movie_item WHERE (:currentTime - updatedAt) < :expireTime ORDER BY popularity DESC")
+    fun getMovieListItems(currentTime: Long, expireTime: Long): Flow<List<MovieItem>>
 
     @Query("DELETE FROM movie_item")
     suspend fun removeMovieListItems()

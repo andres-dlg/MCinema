@@ -13,5 +13,6 @@ data class MovieItem(
     @ColumnInfo(defaultValue = "") val posterUrl: String?,
     val voteAvg: Double,
     val releaseDate: String,
+    val popularity: Double,
     val updatedAt: Long = System.nanoTime()
 )

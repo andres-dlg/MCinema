@@ -20,6 +20,7 @@ data class MovieReviewApiObj(
         author = author,
         avatarUrl = authorDetails.getAvatarPath(),
         rating = authorDetails.rating,
-        content = content
+        content = content,
+        updatedAt = System.currentTimeMillis()
     )
 }

@@ -14,6 +14,7 @@ data class MovieReviewsApiObj(
     fun toLocalDbObj(movieId: Long) = MovieReviews(
         id = null,
         totalReviews = totalReviews,
-        movieId = movieId
+        movieId = movieId,
+        updatedAt = System.currentTimeMillis()
     )
 }

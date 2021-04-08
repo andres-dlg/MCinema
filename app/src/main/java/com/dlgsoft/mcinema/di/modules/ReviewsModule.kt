@@ -2,12 +2,8 @@ package com.dlgsoft.mcinema.di.modules
 
 import com.dlgsoft.mcinema.api.MCinemaApi
 import com.dlgsoft.mcinema.data.db.MCinemaDatabase
-import com.dlgsoft.mcinema.data.db.dao.GenreDao
-import com.dlgsoft.mcinema.data.db.dao.MovieDao
 import com.dlgsoft.mcinema.data.db.dao.MovieReviewsDao
 import com.dlgsoft.mcinema.data.db.dao.ReviewDao
-import com.dlgsoft.mcinema.data.repositories.MovieRepository
-import com.dlgsoft.mcinema.data.repositories.MovieRepositoryImpl
 import com.dlgsoft.mcinema.data.repositories.MovieReviewsRepository
 import com.dlgsoft.mcinema.data.repositories.MovieReviewsRepositoryImpl
 import dagger.Module

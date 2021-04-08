@@ -14,7 +14,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/movie_review_pading">
+        android:padding="@dimen/view_movie_review_pading">
 
         <ImageView
             android:id="@+id/avatar"
@@ -27,12 +27,12 @@
         <TextView
             android:id="@+id/author"
             android:layout_width="0dp"
-            android:layout_height="@dimen/movie_review_author_height"
-            android:layout_marginStart="8dp"
+            android:layout_height="@dimen/view_movie_review_author_height"
+            android:layout_marginStart="@dimen/view_movie_review_author_start_margin"
             android:ellipsize="end"
             android:gravity="center_vertical"
             android:maxLines="2"
-            android:textSize="@dimen/movie_review_author_text_size"
+            android:textSize="@dimen/view_movie_review_author_text_size"
             app:layout_constraintBottom_toBottomOf="@+id/avatar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/avatar"
@@ -43,11 +43,11 @@
             android:id="@+id/review"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/view_movie_review_review_top_margin"
             android:ellipsize="end"
             android:maxLines="3"
             android:text="@string/lorem_ipsum"
-            android:textSize="@dimen/movie_description_text_size"
+            android:textSize="@dimen/view_movie_description_text_size"
             app:layout_constrainedWidth="true"
             app:layout_constraintEnd_toEndOf="@+id/author"
             app:layout_constraintStart_toStartOf="parent"

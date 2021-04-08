@@ -9,15 +9,11 @@ import com.dlgsoft.mcinema.data.db.relations.ReviewsWithTotal
 import com.dlgsoft.mcinema.utils.Resource
 import com.dlgsoft.mcinema.utils.networkBoundResource
 import kotlinx.coroutines.flow.Flow
-import retrofit2.HttpException
-import java.io.IOException
 
 interface MovieReviewsRepository {
     suspend fun getReviews(
         id: Long,
-        page: Int?,
-        onFetchSuccess: () -> Unit,
-        onFetchFailed: (Throwable) -> Unit
+        page: Int?
     ): Flow<Resource<ReviewsWithTotal>>
 }
 
@@ -30,9 +26,7 @@ class MovieReviewsRepositoryImpl(
 
     override suspend fun getReviews(
         id: Long,
-        page: Int?,
-        onFetchSuccess: () -> Unit,
-        onFetchFailed: (Throwable) -> Unit
+        page: Int?
     ): Flow<Resource<ReviewsWithTotal>> = networkBoundResource(
         query = { movieReviewsDao.getReviewsByMovieId(id) },
         fetch = { api.getMovieReviews(id, page) },
@@ -50,13 +44,6 @@ class MovieReviewsRepositoryImpl(
                 reviewDao.insertAll(reviews)
             }
         },
-        shouldFetch = { true },
-        onFetchSuccess = onFetchSuccess,
-        onFetchFailed = { t ->
-            if (t !is HttpException && t !is IOException) {
-                throw t
-            }
-            onFetchFailed(t)
-        }
+        shouldFetch = { true }
     )
 }

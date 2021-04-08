@@ -15,7 +15,9 @@ data class MovieItemApiObj(
     @SerializedName("vote_average")
     val voteAvg: Double,
     @SerializedName("release_date")
-    val releaseDate: String?
+    val releaseDate: String?,
+    @SerializedName("popularity")
+    val popularity: Double,
 ) {
     fun toLocalDbObj() = MovieItem(
         id = id,
@@ -23,6 +25,8 @@ data class MovieItemApiObj(
         posterUrl = posterUrl,
         title = title,
         voteAvg = voteAvg,
+        popularity = popularity,
         releaseDate = releaseDate ?: "",
+        updatedAt = System.currentTimeMillis()
     )
 }

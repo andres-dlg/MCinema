@@ -9,14 +9,10 @@ import com.dlgsoft.mcinema.data.db.relations.MovieWithGenres
 import com.dlgsoft.mcinema.utils.Resource
 import com.dlgsoft.mcinema.utils.networkBoundResource
 import kotlinx.coroutines.flow.Flow
-import retrofit2.HttpException
-import java.io.IOException
 
 interface MovieRepository {
     suspend fun getMovie(
-        id: Long,
-        onFetchSuccess: () -> Unit,
-        onFetchFailed: (Throwable) -> Unit
+        id: Long
     ): Flow<Resource<MovieWithGenres>>
 }
 
@@ -28,9 +24,7 @@ class MovieRepositoryImpl(
 ) : MovieRepository {
 
     override suspend fun getMovie(
-        id: Long,
-        onFetchSuccess: () -> Unit,
-        onFetchFailed: (Throwable) -> Unit
+        id: Long
     ): Flow<Resource<MovieWithGenres>> = networkBoundResource(
         query = { movieDao.getMovieById(id) },
         fetch = { api.getMovie(id) },
@@ -44,13 +38,6 @@ class MovieRepositoryImpl(
                 genreDao.insertAll(genres)
             }
         },
-        shouldFetch = { true },
-        onFetchSuccess = onFetchSuccess,
-        onFetchFailed = { t ->
-            if (t !is HttpException && t !is IOException) {
-                throw t
-            }
-            onFetchFailed(t)
-        }
+        shouldFetch = { true }
     )
 }

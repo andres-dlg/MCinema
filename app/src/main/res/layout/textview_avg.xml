@@ -2,19 +2,18 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="36dp"
     android:id="@+id/root"
-    android:layout_height="36dp"
+    android:layout_width="@dimen/textview_avg_size"
+    android:layout_height="@dimen/textview_avg_size"
     android:background="@drawable/vote_avg_background">
 
     <TextView
         android:id="@+id/vote_avg_first"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:elevation="8dp"
-        android:textSize="20sp"
         android:gravity="center"
         android:textColor="@color/white"
+        android:textSize="@dimen/textview_avg_first_number_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/vote_avg_second"
         app:layout_constraintHorizontal_chainStyle="packed"

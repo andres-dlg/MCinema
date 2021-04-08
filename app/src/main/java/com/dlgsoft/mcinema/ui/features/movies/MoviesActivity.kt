@@ -2,6 +2,8 @@ package com.dlgsoft.mcinema.ui.features.movies
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
@@ -12,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.airbnb.epoxy.EpoxyRecyclerView
 import com.dlgsoft.mcinema.R
 import com.dlgsoft.mcinema.databinding.ActivityMoviesBinding
-import com.dlgsoft.mcinema.extensions.exhaustive
+import com.dlgsoft.mcinema.ui.dialogs.ExpirationDateDialog
 import com.dlgsoft.mcinema.ui.features.movie.MovieActivity
 import com.dlgsoft.mcinema.ui.features.movie.MovieActivity.Companion.EXTRA_MOVIE_ID
 import com.dlgsoft.mcinema.utils.EndlessRecyclerOnScrollListener
@@ -20,6 +22,7 @@ import com.dlgsoft.mcinema.utils.Resource
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
+
 
 @AndroidEntryPoint
 class MoviesActivity : AppCompatActivity() {
@@ -41,68 +44,48 @@ class MoviesActivity : AppCompatActivity() {
         val binding = ActivityMoviesBinding.inflate(layoutInflater)
         val list = binding.list
         val progress = binding.progress
+        val toolbar = binding.toolbar
+        val noMoviesImage = binding.noMoviesImage
+        val noMoviesText = binding.noMoviesText
         setContentView(binding.root)
 
+        setSupportActionBar(toolbar)
         setupList(list)
-
-        /*viewModel.movies
-            .onEach {
-                val result = it ?: return@onEach
-                scrollListener.apply {
-                    listSize = result.data?.size ?: 0
-                    isLoading = false
-                }
-                moviesController.setData(result.data)
-                progress.isVisible = result is Resource.Loading
-            }
-            .launchIn(lifecycleScope)*/
-
 
         lifecycleScope.launchWhenStarted {
             viewModel.movies.collect { event ->
-                val result = event ?: return@collect
-                progress.isVisible = result is Resource.Loading
+                event ?: return@collect
+                progress.isVisible = event is Resource.Loading
                 when (event) {
-                    is Resource.Error -> Snackbar.make(
-                        binding.root,
-                        getString(
-                            R.string.could_not_refresh,
-                            event.error?.localizedMessage
-                                ?: getString(R.string.unknown_error_occurred)
-                        ),
-                        Snackbar.LENGTH_LONG
-                    ).setAction(R.string.retry) {
-                        viewModel.onManualRefresh()
-                    }.show()
-                    is Resource.Loading -> {
-                    }
-                    is Resource.Success -> {
-                        scrollListener.apply {
-                            listSize = result.data?.size ?: 0
-                            isLoading = false
-                        }
-                        moviesController.setData(result.data)
-                    }
-                }
-            }
-        }
-
-        lifecycleScope.launchWhenStarted {
-            viewModel.events.collect { event ->
-                when (event) {
-                    is MoviesViewModel.Event.ShowErrorMessage ->
+                    is Resource.Error -> {
+                        moviesController.setData(event.data)
+                        val noMovies =
+                            moviesController.currentData == null || moviesController.currentData?.size == 0
+                        noMoviesImage.isVisible = noMovies
+                        noMoviesText.isVisible = noMovies
                         Snackbar.make(
                             binding.root,
                             getString(
                                 R.string.could_not_refresh,
-                                event.error.localizedMessage
+                                event.error?.localizedMessage
                                     ?: getString(R.string.unknown_error_occurred)
                             ),
                             Snackbar.LENGTH_LONG
                         ).setAction(R.string.retry) {
                             viewModel.onManualRefresh()
                         }.show()
-                }.exhaustive
+                    }
+                    is Resource.Success -> {
+                        scrollListener.apply {
+                            listSize = event.data?.size ?: 0
+                            isLoading = false
+                        }
+                        moviesController.setData(event.data)
+                    }
+                    else -> {
+                        // Nothing to do
+                    }
+                }
             }
         }
     }
@@ -132,5 +115,29 @@ class MoviesActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         viewModel.onStart()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.movies_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.date) {
+            showFiltersDialog()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun showFiltersDialog() {
+        ExpirationDateDialog(this).apply {
+            init(viewModel.getExpirationDate())
+            setApplyButtonListener {
+                viewModel.saveExpirationDate(it)
+                dismiss()
+            }
+            show()
+        }
     }
 }

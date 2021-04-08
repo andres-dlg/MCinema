@@ -85,25 +85,25 @@ class MovieActivity : AppCompatActivity() {
     private fun setupObserver() {
         lifecycleScope.launchWhenStarted {
             movieViewModel.movie.collect { event ->
+                event ?: return@collect
+                progress.isVisible = event is Resource.Loading
                 when (event) {
                     is Resource.Error -> {
-                        progress.isVisible = true
                         Snackbar.make(
                             root,
                             getString(
-                                R.string.could_not_refresh,
-                                event.error?.localizedMessage
-                                    ?: getString(R.string.unknown_error_occurred)
+                                R.string.could_not_retrieve_movie
                             ),
                             Snackbar.LENGTH_LONG
                         ).setAction(R.string.retry) {
                             movieViewModel.getMovie(movieId)
                         }.show()
                     }
-                    is Resource.Loading -> progress.isVisible = true
                     is Resource.Success -> {
-                        progress.isVisible = false
                         movieController.movie = event.data
+                    }
+                    else -> {
+                        // Nothing to do
                     }
                 }
             }
@@ -111,9 +111,10 @@ class MovieActivity : AppCompatActivity() {
 
         lifecycleScope.launchWhenStarted {
             movieViewModel.reviews.collect { event ->
+                event ?: return@collect
+                progress.isVisible = event is Resource.Loading
                 when (event) {
                     is Resource.Error -> {
-                        progress.isVisible = true
                         Snackbar.make(
                             root,
                             getString(
@@ -126,14 +127,15 @@ class MovieActivity : AppCompatActivity() {
                             movieViewModel.getReviews(movieId)
                         }.show()
                     }
-                    is Resource.Loading -> progress.isVisible = true
                     is Resource.Success -> {
                         scrollListener.apply {
                             listSize = event.data?.reviews?.size ?: 0
                             isLoading = false
                         }
-                        progress.isVisible = false
                         movieController.rwt = event.data
+                    }
+                    else -> {
+                        // Nothing to do
                     }
                 }
             }

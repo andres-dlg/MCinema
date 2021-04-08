@@ -1,5 +1,6 @@
 package com.dlgsoft.mcinema.di.modules
 
+import android.content.SharedPreferences
 import com.dlgsoft.mcinema.api.MCinemaApi
 import com.dlgsoft.mcinema.data.db.MCinemaDatabase
 import com.dlgsoft.mcinema.data.db.dao.MovieItemDao
@@ -25,7 +26,8 @@ class MovieItemModule {
     fun provideMoviesRepository(
         api: MCinemaApi,
         db: MCinemaDatabase,
-        movieItemDao: MovieItemDao
+        movieItemDao: MovieItemDao,
+        sharedPreferences: SharedPreferences
     ): MoviesRepository =
-        MoviesRepositoryImpl(api, db, movieItemDao)
+        MoviesRepositoryImpl(api, db, movieItemDao, sharedPreferences)
 }

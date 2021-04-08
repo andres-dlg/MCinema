@@ -23,8 +23,8 @@
         android:layout_height="0dp"
         android:clipChildren="false"
         android:clipToPadding="false"
-        android:padding="8dp"
-        app:itemSpacing="8dp"
+        android:padding="@dimen/movies_padding"
+        app:itemSpacing="@dimen/movies_spacing"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -42,5 +42,30 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/no_movies_image"
+        android:layout_width="@dimen/movies_no_content_image_size"
+        android:layout_height="@dimen/movies_no_content_image_size"
+        android:alpha=".5"
+        android:src="@drawable/sad"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/no_movies_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <TextView
+        android:id="@+id/no_movies_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/movies_no_content_text_top_margin"
+        android:text="@string/no_movies_for_now"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/no_movies_image" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

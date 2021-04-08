@@ -2,7 +2,6 @@ package com.dlgsoft.mcinema.di.modules
 
 import com.dlgsoft.mcinema.BuildConfig
 import com.dlgsoft.mcinema.api.MCinemaApi
-import com.dlgsoft.mcinema.network.RequestInterceptor
 import com.facebook.flipper.plugins.network.FlipperOkhttpInterceptor
 import com.facebook.flipper.plugins.network.NetworkFlipperPlugin
 import com.google.gson.Gson
@@ -21,23 +20,16 @@ import javax.inject.Singleton
 class NetworkModule {
     @Singleton
     @Provides
-    fun provideRequestInterceptor() =
-        RequestInterceptor()
-
-    @Singleton
-    @Provides
     fun provideFlipperNetworkPlugin() = NetworkFlipperPlugin()
 
     @Singleton
     @Provides
     fun provideOkHttpBuilder(
-        requestInterceptor: RequestInterceptor,
         networkPlugin: NetworkFlipperPlugin
     ): OkHttpClient {
         return OkHttpClient()
             .newBuilder().apply {
                 addNetworkInterceptor(FlipperOkhttpInterceptor(networkPlugin))
-                //addInterceptor(requestInterceptor)
             }.build()
     }
 

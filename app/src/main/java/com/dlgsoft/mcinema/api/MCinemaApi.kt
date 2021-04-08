@@ -15,9 +15,7 @@ interface MCinemaApi {
     @Headers("Authorization: ${BuildConfig.API_KEY}")
     @GET("discover/movie")
     suspend fun getMovies(
-        @Query("sort") sort: String?,
         @Query("page") page: Int?,
-        @Query("q") query: String?,
     ): MoviesApiObj
 
     @Headers("Authorization: ${BuildConfig.API_KEY}")

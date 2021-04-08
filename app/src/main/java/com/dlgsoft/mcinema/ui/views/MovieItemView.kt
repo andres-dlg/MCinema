@@ -6,6 +6,7 @@ import android.text.Spanned.SPAN_INCLUSIVE_INCLUSIVE
 import android.text.TextUtils
 import android.text.style.AbsoluteSizeSpan
 import android.text.style.RelativeSizeSpan
+import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
