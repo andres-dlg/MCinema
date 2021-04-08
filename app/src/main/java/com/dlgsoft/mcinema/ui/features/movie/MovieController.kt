@@ -4,10 +4,7 @@ import com.airbnb.epoxy.EpoxyController
 import com.dlgsoft.mcinema.R
 import com.dlgsoft.mcinema.data.db.relations.MovieWithGenres
 import com.dlgsoft.mcinema.data.db.relations.ReviewsWithTotal
-import com.dlgsoft.mcinema.ui.views.buttonView
-import com.dlgsoft.mcinema.ui.views.movieDetailView
-import com.dlgsoft.mcinema.ui.views.movieReviewView
-import com.dlgsoft.mcinema.ui.views.spacer
+import com.dlgsoft.mcinema.ui.views.*
 
 class MovieController(private val clickListener: (id: Long) -> Unit) : EpoxyController() {
 
@@ -51,9 +48,11 @@ class MovieController(private val clickListener: (id: Long) -> Unit) : EpoxyCont
                 }
             } else {
                 rwt?.let {
-                    print(it.movieReviews.totalReviews)
+                    movieTotalReviewsView {
+                        id("total_reviews")
+                        total(it.movieReviews.totalReviews)
+                    }
                 }
-
                 rwt?.reviews?.forEach {
                     movieReviewView {
                         id(it.id)

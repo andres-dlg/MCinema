@@ -76,4 +76,7 @@
     <dimen name="view_movie_review_author_text_size">18sp</dimen>
     <dimen name="view_movie_description_top_margin">8dp</dimen>
     <dimen name="view_movie_description_text_size">14sp</dimen>
+    <dimen name="view_movie_total_reviews_text_size">18sp</dimen>
+    <dimen name="view_movie_total_reviews_total_start_margin">4dp</dimen>
+    <dimen name="view_movie_total_reviews_padding">16dp</dimen>
 </resources>

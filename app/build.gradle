@@ -28,12 +28,12 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField "String", "API_KEY", "\"Bearer [REPLACE WITH YOUR v4 API KEY]\""
+            buildConfigField "String", "API_KEY", "\"Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwNDg3YTU4YzE1Njc4N2IzZTVmODliYTA3YzQzOTc3OSIsInN1YiI6IjU5ODI0OWI4OTI1MTQxNTFhZTAxYmZhOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.wmL4EpaqKeZ_lLgwjxS2ffnLll-Xzjsjznkh_6ekr88\""
             buildConfigField "String", "BASE_URL", "\"https://api.themoviedb.org/3/\""
             buildConfigField "String", "BASE_URL_IMAGE", "\"https://image.tmdb.org/t/p\""
         }
         debug {
-            buildConfigField "String", "API_KEY", "\"Bearer [REPLACE WITH YOUR v4 API KEY]\""
+            buildConfigField "String", "API_KEY", "\"Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwNDg3YTU4YzE1Njc4N2IzZTVmODliYTA3YzQzOTc3OSIsInN1YiI6IjU5ODI0OWI4OTI1MTQxNTFhZTAxYmZhOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.wmL4EpaqKeZ_lLgwjxS2ffnLll-Xzjsjznkh_6ekr88\""
             buildConfigField "String", "BASE_URL", "\"https://api.themoviedb.org/3/\""
             buildConfigField "String", "BASE_URL_IMAGE", "\"https://image.tmdb.org/t/p\""
         }
@@ -100,12 +100,17 @@ dependencies {
     debugImplementation "com.facebook.soloader:soloader:$flipper_so_loader_version"
     releaseImplementation "com.facebook.flipper:flipper-noop:$flipper_version"
 
+    // Testing
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'androidx.test:core:1.3.0'
+    testImplementation 'org.mockito:mockito-core:3.7.7'
+    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.3'
+
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.3.2'
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.3.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
-    testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 }

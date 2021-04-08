@@ -17,4 +17,6 @@
     <string name="minutes">Minutes</string>
     <string name="expiration_time_hint">If the value is zero on days, hours and minutes, the expiration time will be set automatically on 24hs</string>
     <string name="could_not_retrieve_movie">Could not retrieve movie data</string>
+    <string name="reviews">Reviews</string>
+    <string name="total_reviews">(%d)</string>
 </resources>
