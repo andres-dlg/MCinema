@@ -28,12 +28,12 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField "String", "API_KEY", "\"Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwNDg3YTU4YzE1Njc4N2IzZTVmODliYTA3YzQzOTc3OSIsInN1YiI6IjU5ODI0OWI4OTI1MTQxNTFhZTAxYmZhOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.wmL4EpaqKeZ_lLgwjxS2ffnLll-Xzjsjznkh_6ekr88\""
+            buildConfigField "String", "API_KEY", "\"Bearer [REPLACE WITH YOUR v4 API KEY]\""
             buildConfigField "String", "BASE_URL", "\"https://api.themoviedb.org/3/\""
             buildConfigField "String", "BASE_URL_IMAGE", "\"https://image.tmdb.org/t/p\""
         }
         debug {
-            buildConfigField "String", "API_KEY", "\"Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwNDg3YTU4YzE1Njc4N2IzZTVmODliYTA3YzQzOTc3OSIsInN1YiI6IjU5ODI0OWI4OTI1MTQxNTFhZTAxYmZhOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.wmL4EpaqKeZ_lLgwjxS2ffnLll-Xzjsjznkh_6ekr88\""
+            buildConfigField "String", "API_KEY", "\"Bearer [REPLACE WITH YOUR v4 API KEY]\""
             buildConfigField "String", "BASE_URL", "\"https://api.themoviedb.org/3/\""
             buildConfigField "String", "BASE_URL_IMAGE", "\"https://image.tmdb.org/t/p\""
         }
